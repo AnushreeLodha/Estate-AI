@@ -57,7 +57,7 @@ export default function LeadsManagement() {
               <tr className="bg-surfaceLight/50 text-textMuted text-xs uppercase tracking-wider">
                 <th className="p-4 font-semibold">Lead Info</th>
                 <th className="p-4 font-semibold">Requirement</th>
-                <th className="p-4 font-semibold">AI Score</th>
+
                 <th className="p-4 font-semibold">Status</th>
                 <th className="p-4 font-semibold hidden md:table-cell">Last Message</th>
                 <th className="p-4 font-semibold text-right">Actions</th>
@@ -78,13 +78,7 @@ export default function LeadsManagement() {
                       <span className="text-xs text-textMuted">{lead.location} • {lead.timeline}</span>
                     </div>
                   </td>
-                  <td className="p-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center border-2 border-primary/20 bg-primary/10 text-primary font-bold text-sm">
-                        {lead.score}
-                      </div>
-                    </div>
-                  </td>
+
                   <td className="p-4">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
                       lead.status === 'Hot' ? 'bg-danger/10 text-danger border-danger/20' :

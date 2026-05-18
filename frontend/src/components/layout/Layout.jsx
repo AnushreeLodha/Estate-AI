@@ -41,15 +41,7 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
-        <div className="p-4 border-t border-borderCol/50">
-          <div className="glass-card p-4 flex flex-col gap-2">
-            <p className="text-xs text-textMuted">AI Credits Remaining</p>
-            <div className="w-full bg-background rounded-full h-1.5">
-              <div className="bg-primary h-1.5 rounded-full w-[75%]"></div>
-            </div>
-            <p className="text-sm font-semibold">7,500 / 10,000</p>
-          </div>
-        </div>
+
       </aside>
 
       {/* Main Content */}
