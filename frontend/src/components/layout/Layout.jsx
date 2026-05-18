@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, MessageSquare, Calendar as CalendarIcon, 
-  ListTodo, Building2, Settings as SettingsIcon, BarChart3, UsersRound, Bell, Search, UserCircle
+  ListTodo, Building2, Settings as SettingsIcon, BarChart3, Bell, Search, UserCircle
 } from 'lucide-react';
 
 export default function Layout() {
@@ -13,7 +13,6 @@ export default function Layout() {
     { name: 'Follow-ups', path: '/follow-up', icon: ListTodo },
     { name: 'Properties', path: '/properties', icon: Building2 },
     { name: 'Analytics', path: '/analytics', icon: BarChart3 },
-    { name: 'Team', path: '/team', icon: UsersRound },
     { name: 'Settings', path: '/settings', icon: SettingsIcon },
   ];
 

@@ -38,3 +38,59 @@
     @apply bg-primary/50;
   }
 }
+
+/* react-big-calendar custom overrides */
+.rbc-calendar {
+  font-family: 'Inter', sans-serif;
+  color: #F2ECE4; /* textMain */
+}
+.rbc-toolbar button {
+  color: #B8A89A; /* textMuted */
+}
+.rbc-toolbar button.rbc-active, .rbc-toolbar button:active, .rbc-toolbar button:hover {
+  background-color: rgba(212, 175, 55, 0.2); /* primary with opacity */
+  color: #D4AF37; /* primary */
+  border-color: #D4AF37;
+  box-shadow: none;
+}
+.rbc-month-view, .rbc-time-view, .rbc-agenda-view {
+  border-color: #3D332A; /* borderCol */
+  background: rgba(42, 35, 30, 0.2); /* surface with opacity */
+}
+.rbc-month-row, .rbc-day-bg, .rbc-header {
+  border-color: #3D332A; /* borderCol */
+}
+.rbc-off-range-bg {
+  background: rgba(26, 21, 18, 0.5); /* background with opacity */
+}
+.rbc-today {
+  background: rgba(212, 175, 55, 0.1); /* primary with opacity */
+}
+.rbc-event {
+  background-color: transparent;
+  padding: 0;
+}
+.event-confirmed {
+  background-color: rgba(76, 175, 80, 0.2); /* success/20 */
+  border: 1px solid rgba(76, 175, 80, 0.5);
+  color: #4CAF50; /* success */
+  border-radius: 4px;
+}
+.event-pending {
+  background-color: rgba(255, 152, 0, 0.2); /* warning/20 */
+  border: 1px solid rgba(255, 152, 0, 0.5);
+  color: #FF9800; /* warning */
+  border-radius: 4px;
+}
+.rbc-time-header-content, .rbc-time-content, .rbc-timeslot-group, .rbc-day-slot .rbc-time-slot {
+  border-color: #3D332A;
+}
+.rbc-agenda-view table.rbc-agenda-table {
+  border: none;
+}
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
+  border-color: #3D332A;
+}
+.rbc-agenda-date-cell, .rbc-agenda-time-cell {
+  color: #B8A89A;
+}

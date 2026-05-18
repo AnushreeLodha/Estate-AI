@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Broker {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id           String      @id @default(uuid())
+  name         String
+  phone        String
+  budget       String
+  locationPref String
+  bhkPref      String
+  status       String      // e.g. New, Qualified, Site Visit, Closed, Lost
+  createdAt    DateTime    @default(now())
+  siteVisits   SiteVisit[]
+  messages     Message[]
+}
+
+model Property {
+  id          String      @id @default(uuid())
+  title       String
+  priceRange  String
+  location    String
+  bhk         String
+  area        String
+  status      String      // e.g. Ready to Move, Under Construction, Sold
+  imageUrl    String?
+  createdAt   DateTime    @default(now())
+  siteVisits  SiteVisit[]
+}
+
+model SiteVisit {
+  id          String   @id @default(uuid())
+  leadId      String
+  propertyId  String
+  scheduledAt DateTime
+  status      String   // e.g. Confirmed, Pending, Completed, Rescheduled
+  createdAt   DateTime @default(now())
+
+  lead        Lead     @relation(fields: [leadId], references: [id])
+  property    Property @relation(fields: [propertyId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  leadId    String
+  content   String
+  direction String   // "Incoming" or "Outgoing"
+  timestamp DateTime @default(now())
+
+  lead      Lead     @relation(fields: [leadId], references: [id])
+}
