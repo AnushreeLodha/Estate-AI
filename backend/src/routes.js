@@ -69,6 +69,29 @@ router.post('/properties', async (req, res) => {
   }
 });
 
+router.put('/properties/:id', async (req, res) => {
+  try {
+    const updatedProperty = await prisma.property.update({
+      where: { id: req.params.id },
+      data: req.body
+    });
+    res.json(updatedProperty);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete('/properties/:id', async (req, res) => {
+  try {
+    await prisma.property.delete({
+      where: { id: req.params.id }
+    });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // --- SITE VISITS (CALENDAR) ---
 router.get('/visits', async (req, res) => {
   try {

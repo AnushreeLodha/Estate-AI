@@ -78,9 +78,17 @@ export default function Properties() {
       if (res.ok) {
         closeFormModal();
         fetchProperties();
+      } else {
+        let errorMsg = res.statusText;
+        try {
+          const data = await res.json();
+          errorMsg = data.error || errorMsg;
+        } catch(e) {}
+        alert(`Failed to save property. Server says: ${errorMsg}`);
       }
     } catch (err) {
       console.error("Error saving property:", err);
+      alert(`Network error or server is down: ${err.message}. Make sure your backend is running on port 5000.`);
     }
   };
 
