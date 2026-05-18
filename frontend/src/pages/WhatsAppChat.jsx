@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Send, Paperclip, MoreVertical, Check, CheckCheck, Bot, User, Phone, Video } from 'lucide-react';
+import { Search, Send, Paperclip, MoreVertical, Check, CheckCheck, Bot, User, Phone, Video, Sparkles } from 'lucide-react';
 
 const contacts = [
   { id: 1, name: 'Rahul Sharma', lastMsg: 'I would like to visit the site tomorrow.', time: '10:30 AM', unread: 2, online: true, aiActive: false },
