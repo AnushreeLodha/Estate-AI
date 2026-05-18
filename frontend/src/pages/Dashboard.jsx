@@ -1,14 +1,15 @@
+import { useState, useEffect } from 'react';
 import { Users, Flame, Calendar as CalendarIcon, Clock, IndianRupee, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const data = [
-  { name: 'Mon', leads: 4000, conversion: 2400 },
-  { name: 'Tue', leads: 3000, conversion: 1398 },
-  { name: 'Wed', leads: 2000, conversion: 9800 },
-  { name: 'Thu', leads: 2780, conversion: 3908 },
-  { name: 'Fri', leads: 1890, conversion: 4800 },
-  { name: 'Sat', leads: 2390, conversion: 3800 },
-  { name: 'Sun', leads: 3490, conversion: 4300 },
+const chartData = [
+  { name: 'Mon', leads: 4, conversion: 2 },
+  { name: 'Tue', leads: 6, conversion: 3 },
+  { name: 'Wed', leads: 8, conversion: 5 },
+  { name: 'Thu', leads: 5, conversion: 4 },
+  { name: 'Fri', leads: 12, conversion: 8 },
+  { name: 'Sat', leads: 15, conversion: 10 },
+  { name: 'Sun', leads: 18, conversion: 12 },
 ];
 
 const activityFeed = [
@@ -19,6 +20,40 @@ const activityFeed = [
 ];
 
 export default function Dashboard() {
+  const [stats, setStats] = useState({
+    totalLeads: 0,
+    activeProperties: 0,
+    pendingVisits: 0,
+    aiMessagesSent: 1245,
+    avgResponseTime: '2 mins'
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/dashboard/stats');
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.error("Error fetching stats:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  const kpis = [
+    { label: 'Total Leads', value: stats.totalLeads, icon: Users, trend: '+12%', up: true },
+    { label: 'Ready Properties', value: stats.activeProperties, icon: Flame, trend: '+4%', up: true },
+    { label: 'Pending Visits', value: stats.pendingVisits, icon: CalendarIcon, trend: '-2%', up: false },
+    { label: 'AI Messages Sent', value: stats.aiMessagesSent, icon: Clock, trend: '+8%', up: true },
+    { label: 'Avg AI Response', value: stats.avgResponseTime, icon: IndianRupee, trend: 'Optimal', up: true },
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-end">
@@ -31,13 +66,7 @@ export default function Dashboard() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {[
-          { label: 'Total Leads', value: '2,451', icon: Users, trend: '+12%', up: true },
-          { label: 'Hot Leads', value: '342', icon: Flame, trend: '+4%', up: true },
-          { label: 'Visits Today', value: '18', icon: CalendarIcon, trend: '-2%', up: false },
-          { label: 'Pending Follow-ups', value: '45', icon: Clock, trend: '+8%', up: false },
-          { label: 'Est. Revenue', value: '₹4.2Cr', icon: IndianRupee, trend: '+24%', up: true },
-        ].map((kpi, idx) => (
+        {kpis.map((kpi, idx) => (
           <div key={idx} className="glass-card p-5 flex flex-col gap-3 group">
             <div className="flex justify-between items-start">
               <div className="p-2 bg-surfaceLight rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -49,7 +78,9 @@ export default function Dashboard() {
               </span>
             </div>
             <div>
-              <p className="text-2xl font-bold text-textMain">{kpi.value}</p>
+              <p className="text-2xl font-bold text-textMain">
+                {loading ? '...' : kpi.value}
+              </p>
               <p className="text-xs text-textMuted">{kpi.label}</p>
             </div>
           </div>
@@ -69,7 +100,7 @@ export default function Dashboard() {
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.3}/>
@@ -78,7 +109,7 @@ export default function Dashboard() {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#3D332A" vertical={false} />
                 <XAxis dataKey="name" stroke="#B8A89A" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#B8A89A" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${value / 1000}k`} />
+                <YAxis stroke="#B8A89A" fontSize={12} tickLine={false} axisLine={false} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#2A231E', borderColor: '#3D332A', borderRadius: '12px' }}
                   itemStyle={{ color: '#F2ECE4' }}
