@@ -4,7 +4,7 @@ fetch('http://localhost:5000/api/leads', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    name: 'Anushree',
+    name: 'Vijay',
     phone: '919660080163',
     budget: '2.5Cr',
     locationPref: 'Andheri',
@@ -12,6 +12,6 @@ fetch('http://localhost:5000/api/leads', {
     status: 'New'
   })
 })
-.then(res => res.json())
-.then(data => console.log('✅ Lead created successfully! Check your WhatsApp.', data))
-.catch(err => console.error('❌ Error:', err));
+  .then(res => res.json())
+  .then(data => console.log('✅ Lead created successfully! Check your WhatsApp.', data))
+  .catch(err => console.error('❌ Error:', err));
