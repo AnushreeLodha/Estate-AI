@@ -18,6 +18,7 @@ export default function WhatsAppChat() {
   const [simLoading, setSimLoading] = useState(false);
 
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   // Scroll to bottom of chat
   const scrollToBottom = () => {
@@ -222,7 +223,7 @@ export default function WhatsAppChat() {
 
         {/* Right Area - Chat Window */}
         {activeChat ? (
-          <div className="flex-1 flex flex-col bg-[url('https://i.ibb.co/3Yx9bFp/whatsapp-bg-dark.png')] bg-cover bg-center">
+          <div className="flex-1 flex flex-col bg-white">
             {/* Chat Header */}
             <div className="h-16 px-4 border-b border-borderCol/50 bg-surface/80 backdrop-blur-md flex justify-between items-center">
               <div className="flex items-center gap-3">
@@ -257,7 +258,7 @@ export default function WhatsAppChat() {
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.direction === 'Outgoing' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[70%] rounded-xl px-4 py-2 relative group ${
-                    msg.direction === 'Outgoing' ? 'bg-primary/20 text-textMain rounded-tr-none border border-primary/30' : 'bg-surfaceLight/80 text-textMain rounded-tl-none border border-borderCol/50'
+                    msg.direction === 'Outgoing' ? 'bg-primary/20 text-black rounded-tr-none border border-primary/30' : 'bg-surfaceLight/80 text-textMain rounded-tl-none border border-borderCol/50'
                   }`}>
                     {/* Render AI Tag for outbound auto-replies */}
                     {msg.direction === 'Outgoing' && msg.isAi !== false && (
@@ -299,7 +300,25 @@ export default function WhatsAppChat() {
 
             {/* Input Area */}
             <form onSubmit={handleSendMessage} className="p-4 bg-surface/90 backdrop-blur-md border-t border-borderCol/50 flex items-end gap-3">
-              <button type="button" className="p-2 text-textMuted hover:text-primary transition-colors"><Paperclip className="w-5 h-5" /></button>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                className="hidden" 
+                accept="image/*,application/pdf,.doc,.docx"
+                onChange={(e) => {
+                  if (e.target.files.length > 0) {
+                    alert(`Selected file: ${e.target.files[0].name}. (File upload feature to be connected to backend)`);
+                    e.target.value = null; // reset
+                  }
+                }}
+              />
+              <button 
+                type="button" 
+                onClick={() => fileInputRef.current?.click()}
+                className="p-2 text-textMuted hover:text-primary transition-colors"
+              >
+                <Paperclip className="w-5 h-5" />
+              </button>
               <div className="flex-1 bg-surfaceLight border border-borderCol rounded-xl overflow-hidden flex items-center">
                 <textarea 
                   rows="1"
